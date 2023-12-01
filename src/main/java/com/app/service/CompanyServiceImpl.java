@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.app.entity.Company;
+import com.app.exception.CompanyNotFoundException;
 import com.app.repo.CompanyRepository;
 @Service
 public class CompanyServiceImpl implements ICompanyService {
@@ -29,9 +30,9 @@ public class CompanyServiceImpl implements ICompanyService {
 	public Company getOneCompany(Long id) {
 		Optional<Company> opt = repo.findById(id);
 		if(opt.isPresent()) {
-			return null; //TODO: need to throw exception
-		}else {
 			return opt.get();
+		}else {
+			throw new CompanyNotFoundException("Given '"+id+"' Not Exist");
 		}
 	}
 
